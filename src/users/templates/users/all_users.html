@@ -1,0 +1,90 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% load common_tags %}
+
+{% block title %}
+  Пользователи
+{% endblock %}
+
+<!-- META TAGS -->
+{% block meta_tags %}
+  {% include 'layout/components/meta_tags.html' %}
+{% endblock %}
+
+{% block content %}
+  <!-- Контент главной страницы -->
+  <section id="all_users" class="my-3">
+    <div class="container py-3 py-lg-5">
+      <h3 class="text-center fs-2 mb-4">Пользователи</h3>
+      <div class="row">
+        {% for user in all_users %}
+          <div class="col-12 col-md-6 col-lg-4 col-xl-3 p-3">
+            <div class="user_card d-flex flex-column h-100 {% if user.is_active == False %}
+                bg-danger-subtle
+              {% else %}
+                border border-1 border-success
+              {% endif %} {% if request.user.is_authenticated and user.is_superuser %}bg-success-subtle{% endif %} rounded-3 shadow-sm">
+              <div class="user_card_header text-center p-3">
+                <a href="{% url 'admin:index' %}users/profile/{{ user.id }}/change/" target="_blank" class="text-decoration-none">
+                  {% if user.image %}
+                    <img id="image" class="img-fluid w-50 rounded-circle shadow-sm" src="{{ user.image.url }}" alt="Аватар пользователя {{ user.nic_name }}" />
+                  {% else %}
+                    <img id="image" class="img-fluid w-50 rounded-circle bg-light shadow-sm" src="{% static 'img/elements/no_photo.webp' %}" alt="Аватар пользователя {{ user.nic_name }}" />
+                  {% endif %}
+                </a>
+                <a href="{% url 'admin:index' %}users/profile/{{ user.id }}/change/" target="_blank" class="text-decoration-none"><h6 class="fw-bold pt-4">{{ user|upper }}</h6></a>
+              </div>
+
+              <div class="user_card_body flex-grow-1 text-center pb-2 px-3">
+                <a href="{% url 'admin:index' %}users/profile/{{ user.id }}/change/" target="_blank" class="text-decoration-none">
+                  <p class="fw-bold fs-6 text-black-50 m-0">
+                    {% if user.position %}
+                      {{ user.position|upper }}
+                    {% else %}
+                      &mdash;&mdash;&mdash;
+                    {% endif %}
+                  </p>
+                  <p class="fw-bold fs-7 m-0 pt-3">
+                    {% if user.company %}
+                      {{ user.company|upper|replace_n|safe|typus }}
+                    {% else %}
+                      &mdash;&mdash;&mdash;
+                    {% endif %}
+                  </p>
+                </a>
+              </div>
+              <div class="user_card_footer">
+                <hr class="mx-3 mb-0 px-3 pb-3" />
+                <div class="d-flex flex-row justify-content-around align-items-center px-3 pb-3">
+                  {% if user.email %}
+                    <a href="mailto:{{ user.email }}?subject=Запрос от сервиса &laquo;НИОКРИД&raquo;&amp;body=Добрый%20день!" class="btn btn-outline-primary rounded-circle" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ user.email }}"><i class="bi bi-envelope-at fs-6"></i></a>
+                  {% else %}
+                    <div class="btn btn-outline-primary rounded-circle" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="&mdash;&mdash;&mdash;">
+                      <i class="bi bi-envelope-at fs-6"></i>
+                    </div>
+                  {% endif %}
+                  {% if user.phone %}
+                    <a href="tel:{{ user.phone }}" class="btn btn-outline-primary rounded-circle" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ user.phone }}"><i class="bi bi-telephone fs-6"></i></a>
+                  {% else %}
+                    <div class="btn btn-outline-primary rounded-circle" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="&mdash;&mdash;&mdash;">
+                      <i class="bi bi-telephone fs-6"></i>
+                    </div>
+                  {% endif %}
+                  {% if user.phone %}
+                    <a href="https://wa.me/{{ user.phone|format_phone_to_whatsapp }}" class="btn btn-outline-primary rounded-circle" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="WhatsApp: {{ user.phone|format_phone_to_whatsapp }}"><i class="bi bi-whatsapp fs-6"></i></a>
+                  {% else %}
+                    <div class="btn btn-outline-primary rounded-circle" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="&mdash;&mdash;&mdash;">
+                      <i class="bi bi-whatsapp fs-6"></i>
+                    </div>
+                  {% endif %}
+                  {% comment %} <a href="{% url 'user_projects' pk=user.id %}" class="btn btn-outline-success rounded-circle" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Проекты пользователя"><i class="bi bi-clipboard-data fs-6"></i></a> {% endcomment %}
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  <!-- *********** -->
+{% endblock %}

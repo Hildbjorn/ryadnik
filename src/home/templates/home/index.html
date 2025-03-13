@@ -1,0 +1,27 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load common_tags %}
+
+{% block title %}
+Рядник - Современный менеджер задач с духом древнерусской мудрости
+{% endblock %}
+
+<!-- META TAGS -->
+{% block meta_tags %}
+  {% include 'layout/components/meta_tags.html' %}
+{% endblock %}
+
+{% block content %}
+  <!-- Hero -->
+  {% include 'home/components/hero.html' %}
+
+  <!-- About -->
+  {% comment %} {% include 'home/components/about.html' %} {% endcomment %}
+
+  <!-- Feedbacks -->
+  {% comment %} {% include 'feedback/components/feedbacks.html' %} {% endcomment %}
+
+  <!-- Contacts -->
+  {% comment %} {% include 'home/components/contacts.html' %} {% endcomment %}
+{% endblock %}

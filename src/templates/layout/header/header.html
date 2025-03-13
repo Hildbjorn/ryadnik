@@ -1,0 +1,85 @@
+{% load static %}
+<!-- ======= Header - Главное меню сайта ======= -->
+<header id="header" class="d-flex align-items-center justify-content-between fixed-top">
+  <!-- ======= End Header - Конец главного меню сайта ======= -->
+  <nav class="navbar navbar-expand-xl bg-secondary fixed-top">
+    <div class="container">
+      {% include 'layout/header/navbar_brand.html' %}
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Переключить навигацию"><i class="bi bi-list fs-2 text-light"></i></button>
+      <div class="offcanvas offcanvas-end bg-primary" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">{% include 'layout/header/navbar_brand.html' %}</h5>
+          <button type="button" class="btn-close fs-2" data-bs-dismiss="offcanvas" aria-label="Закрыть"><i class="bi bi-x"></i></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-center align-items-start align-items-xl-center flex-grow-1 pe-5 gap-2 gap-xl-4 mb-2 mb-xl-0">
+            <li class="nav-item">
+              <a class="nav-link btn btn-sm btn-link text-light text-nowrap {% if request.path == '/#' %}active{% endif %}"
+                {% if request.path == '/#' %}
+                aria-current="page"
+                {% else %}
+                aria-current="false"
+                {% endif %}
+                href="{% url 'index' %}#">
+                <i class="bi bi-house-door me-2 mx-0 mx-xl-2"></i>
+                <span class="d-inline-block d-xl-none text-light">Главная</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link btn btn-sm btn-link text-light text-nowrap {% if request.path == '/immediate_tasks' %}active{% endif %}"
+                 {% if request.path == '/immediate_tasks' %}
+              aria-current="page"
+              {% else %}
+              aria-current="false"
+              {% endif %}
+              href="#">
+              Срочные
+              </a>
+            </li>
+            {% comment %} <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false"><i class="bi bi-question-circle me-2"></i><span class="text-light">Справочник</span></a>
+              <ul class="dropdown-menu dropdown-menu-lg-end">
+                <li>
+                  <a class="dropdown-item" href="{% url 'methodology' %}#"><i class="bi bi-book me-2"></i>Методика</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'project_stages' %}#"><i class="bi bi-bar-chart-steps me-2"></i>Стадии проекта</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'key_markets' %}#"><i class="bi bi-shop-window me-2"></i>Ключевые рынки</a>
+                </li>
+            </ul>
+            <li class="nav-item">
+              <a class="nav-link btn btn-sm btn-link text-light text-nowrap {% if request.path == '/contacts' %}active{% endif %}"
+                {% if request.path == '/contacts' %}
+                aria-current="page"
+                {% else %}
+                aria-current="false"
+                {% endif %}
+                href="{% url 'index' %}#contacts">
+                <i class="bi bi-chat-right-dots me-2"></i>Контакты
+              </a>
+            </li>
+            {% if request.user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link btn btn-sm btn-success text-nowrap {% if request.path == '/projects' %}active{% endif %}"
+                  {% if request.path == '/projects' %}
+                  aria-current="page"
+                  {% else %}
+                  aria-current="false"
+                  {% endif %}
+                  href="{% url 'profile' tab='projects' %}">
+                  <i class="bi bi-clipboard-data me-2"></i>Проекты
+                </a>
+              </li>
+            {% endif %}{% endcomment %}
+          </ul>
+          {% include 'layout/header/user_menu.html' %}
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<!-- Заглушка под закрепленной шапкой -->
+<div id="header_plug" class="header_plug"></div>
+<!-- ******** *** ************ ****** -->

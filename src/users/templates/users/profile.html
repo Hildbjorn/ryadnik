@@ -1,0 +1,44 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% load common_tags %}
+
+{% block title %}
+  {% if user.first_name and user.last_name %}
+    {{ user.first_name }} {{ user.last_name }}
+  {% else %}
+    {{ user.get_username }}
+  {% endif %}- Личный кабинет
+{% endblock %}
+
+<!-- META TAGS -->
+{% block meta_tags %}
+  {% include 'layout/components/meta_tags.html' %}
+{% endblock %}
+
+{% block content %}
+  <!-- Контент главной страницы -->
+  <section id="profile" class="mb-3">
+    <div class="container py-3 py-lg-5">
+      <!-- Вкладки -->
+      <nav class="mt-5">
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <button class="nav-link active"
+            id="nav-profile-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#nav-profile"
+            type="button"
+            role="tab"
+            aria-controls="nav-profile"
+            aria-selected="true">
+            <i class="bi bi-person-workspace me-2"></i>Профиль
+          </button>
+        </div>
+      </nav>
+      <div class="tab-content" id="nav-tabContent">
+        <!-- Вкладка профиля -->
+        {% include 'users/components/personal_data.html' %}
+      </div>
+    </div>
+  </section>
+  <!-- *********** -->
+{% endblock %}

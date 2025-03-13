@@ -1,0 +1,57 @@
+{% load static %}
+{% load widget_tweaks %}
+{% load common_tags %}
+
+<form id="registration_form" method="POST" enctype="multipart/form-data" class="form" hx-post="{% url 'profile_signup_modal' %}" hx-swap="outerHTML" hx-indicator="#spinner_modal">
+  {% csrf_token %}
+  <div class="modal-header rounded-top ps-xl-4">
+    <h3 class="modal-title align-middle" id="staticBackdropLabel"><i class="bi bi-key me-3"></i>Регистрация</h3>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+  </div>
+  <div class="modal-body ps-xl-4">
+    <div class="row my-0 my-lg-3">
+      <div class="col-12 col-lg-4 order-1 d-none d-lg-flex px-3">
+        <div class="d-flex align-items-center justify-content-start flex-grow-1">
+          <img src="{% static 'img/elements/logo.webp' %}" class="img-fluid rounded-3" alt="Регистрация" />
+        </div>
+      </div>
+      <div class="col-12 col-lg-8 order-2 d-flex flex-column justify-content-center mt-3 mt-lg-0 px-3">
+        <div class="justify-content-start">
+          <!-- Форма -->
+          <div class="mb-2">
+            <div class="form-floating my-3">
+              {{ form.email|attr:'id:id_username'|attr:'placeholder:name@example.com' }}
+              <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+              {{ form.email.errors }}
+            </div>
+            <div class="form-floating my-3">
+              {{ form.password1|attr:'id:id_password1'|attr:'placeholder:Пароль' }}
+              <label for="{{ form.password1.id_for_label }}">{{ form.password1.label }}</label>
+              <div id="{{ form.password1.id_for_label }}Help" class="form-text">{{ form.password1.help_text }}</div>
+              <div id="{{ form.password1.id_for_label }}Help" class="form-text">{{ form.password1.errors }}</div>
+            </div>
+            <div class="form-floating my-3">
+              {{ form.password2|attr:'id:id_password2'|attr:'placeholder:Пароль' }}
+              <label for="{{ form.password2.id_for_label }}">{{ form.password2.label }}</label>
+              <div id="{{ form.password2.id_for_label }}Help" class="form-text">{{ form.password2.help_text }}</div>
+              <div id="{{ form.password2.id_for_label }}Help" class="form-text">{{ form.password2.errors }}</div>
+            </div>
+            <hr class="hr" />
+            <p>Подтвердите, что вы не робот:</p>
+            <div class="d-flex flex-row align-items-center my-3">
+              {{ form.captcha }}<br />
+            </div>
+            {{ form.captcha.errors }}
+          </div>
+          <!-- ===== -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer rounded-bottom ps-xl-4">
+    <button type="submit" class="btn btn_submit btn-primary"><i class="bi bi-power me-2"></i>Зарегистрироваться</button>
+  </div>
+</form>
+
+<!-- Индикатор загрузки в модальном окне -->
+{% include 'layout/components/spinner_modal.html' %}

@@ -1,0 +1,25 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+
+{% block title %}
+  Доступ запрещен!
+{% endblock %}
+
+{% block content %}
+  <!-- Контент страницы -->
+  <div class="container bg-danger-subtle rounded shadow-sm w-auto my-auto p-3 p-lg-4">
+    <h2 class="text-center text-primary">Доступ запрещен!</h2>
+    <div class="text-center mt-5">
+      <div class="mt-5">
+        <img class="img-fluid w-50" src="{% static 'img/elements/logo.svg' %}" alt="Страница не существует" />
+      </div>
+      <div class="mt-5">
+        <h2 class="text-center text-primary fw-bold big-text">У&nbsp;вас нет прав на&nbsp;просмотр данной страницы.</h2>
+      </div>
+      <p class="text-end mt-5 mb-0">
+        <a class="btn btn-outline-primary" href="mailto:afomin@vniicentr.ru?subject=Проблема%20с%20доступом&body=Добрый%20день!">Обратитесь к&nbsp;администрации</a>
+      </p>
+    </div>
+  </div>
+  <!-- *********** -->
+{% endblock %}

@@ -1,0 +1,61 @@
+{% load static %}
+<ul class="navbar-nav align-items-xl-center mt-4 mt-xl-0">
+  {% if request.user.is_authenticated %}
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false"><i class="bi bi-person-lines-fill fs-4 me-2"></i><span class="d-inline-block d-xl-none text-light">Меню пользователя</span></a>
+      <ul class="dropdown-menu dropdown-menu-lg-end">
+        <li>
+          <a class="dropdown-item"
+            href="{% url 'profile' %}"
+            title="{% if user.first_name and user.last_name %}
+              {{ user.first_name }}{{ user.last_name }}
+            {% else %}
+              {{ user.get_username }}
+            {% endif %}">
+            <i class="bi bi-person-workspace me-2"></i>Профиль
+          </a>
+        </li>
+        {% if request.user.is_authenticated and user.is_superuser %}
+          <li>
+            <hr class="dropdown-divider" />
+          </li>
+          <li>
+            <a class="dropdown-item" href="{% url 'admin:index' %}" target="_blank"><b><i class="bi bi-sliders2-vertical me-2"></i>Панель администратора</b></a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="{% url 'all_users' %}"><i class="bi bi-people me-2"></i>Все пользователи</a>
+          </li>
+          <li>
+            <hr class="dropdown-divider" />
+          </li>
+          <li>
+            <form action="{% url 'delete_inactive_profiles' %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="dropdown-item text-danger"><i class="bi bi-trash me-2"></i>Удалить неактивных</button>
+            </form>
+          </li>
+        {% endif %}
+        <li>
+          <hr class="dropdown-divider" />
+        </li>
+        <li>
+          <form id="logout-form" method="post" action="{% url 'profile_logout' %}">
+            {% csrf_token %}
+            <button class="dropdown-item" type="submit"><i class="bi bi-box-arrow-right me-2"></i>Выход</button>
+          </form>
+        </li>
+      </ul>
+    </li>
+  {% else %}
+    <li>
+      <div class="d-flex align-self-end align-items-center">
+        <div type="button" class="btn btn-sm btn-link text-light me-3" role="button" hx-get="{% url 'profile_login_modal' %}?next={% url 'profile' %}" hx-target="#modal-content" hx-trigger="click" data-bs-toggle="modal" data-bs-target="#modal">
+          <i class="bi bi-box-arrow-in-right fs-5 px-1"></i>
+        </div>
+        <div type="button" class="btn btn-sm btn-link text-light" role="button" hx-get="{% url 'profile_signup_modal' %}?next={{ request.path }}" hx-target="#modal-content" hx-trigger="click" data-bs-toggle="modal" data-bs-target="#modal">
+          <i class="bi bi-key fs-5 px-1"></i>
+        </div>
+      </div>
+    </li>
+  {% endif %}
+</ul>

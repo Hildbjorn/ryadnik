@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!-- Copyright (c) 2024 Artem Fomin -->
+{% load static %}
+{% load sass_tags %}
+{% load django_bootstrap5 %}
+
+<html lang="ru" data-bs-theme="light">
+  <head>
+    <!-- Кодировка символов -->
+    <meta charset="utf-8" />
+    <!-- Параметры отображения страницы на мобильных устройствах -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- CSRF TOKEN -->
+    <meta name="csrfmiddlewaretoken" content="{{ csrf_token }}" />
+    <!-- CSS -->
+    <link href="{% sass_src 'css/main.scss' %}" rel="stylesheet" type="text/css" />
+    <!-- Заголовок страницы -->
+    <title>
+      {% block title %}
+        B-MODEL.PRO
+      {% endblock %}
+    </title>
+
+    <!-- Favicon (Рекомендую Онлайн-генератор https://realfavicongenerator.net) -->
+    {% include 'layout/components/favicons.html' %}
+
+    <!-- META TAGS (меняются в подключаемых страницах) -->
+    {% block meta_tags %}
+
+    {% endblock %}
+  </head>
+  <!-- Тело страницы -->
+  <body class="bg-body">
+    <!-- Экран со спинером загрузки -->
+    {% include 'layout/components/spinner.html' %}
+
+    <!-- Модальные окна -->
+    {% include 'layout/components/modal.html' %}
+
+    <!-- Шапка страницы -->
+    {% include 'layout/header/header.html' %}
+
+    <!-- Основной контент страницы -->
+    <main class="d-flex flex-column flex-fill bg-body">
+      <!-- Сообщения об успехе -->
+      {% include 'layout/components/messages.html' %}
+      <!-- ********* ** ****** -->
+      <!-- Контент страницы -->
+      {% block content %}
+
+      {% endblock %}
+      <!-- ******* ******** -->
+    </main>
+    <!-- Подвал страницы -->
+    {% comment %} {% include 'layout/footer/footer.html' %} {% endcomment %}
+
+    <!-- HTMX -->
+    <script src="{% static 'htmx/htmx.min.js' %}"></script>
+    <!-- jQuery -->
+    <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+    <!-- JavaScript -->
+    <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+    <!-- Путь к скриптам для автозаполнения поля "Организация" -->
+    <script src="https://cdn.jsdelivr.net/npm/suggestions-jquery@21.8.0/dist/js/jquery.suggestions.min.js"></script>
+    <!-- Bootstrap в связке с Popper -->
+    {% bootstrap_javascript %}
+  </body>
+</html>
